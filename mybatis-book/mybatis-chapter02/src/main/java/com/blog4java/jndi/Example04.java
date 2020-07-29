@@ -16,6 +16,8 @@ import java.sql.Connection;
 import java.util.Properties;
 
 public class Example04 {
+    Properties jndiProps;
+    Context ctx;
     @Before
     public void before() throws IOException {
         DataSourceFactory dsf = new UnpooledDataSourceFactory();
@@ -25,10 +27,10 @@ public class Example04 {
         dsf.setProperties(properties);
         DataSource dataSource = dsf.getDataSource();
         try {
-            Properties jndiProps = new Properties();
+            jndiProps = new Properties();
             jndiProps.put(Context.INITIAL_CONTEXT_FACTORY, "org.apache.naming.java.javaURLContextFactory");
             jndiProps.put(Context.URL_PKG_PREFIXES, "org.apache.naming");
-            Context ctx = new InitialContext(jndiProps);
+            ctx = new InitialContext(jndiProps);
             ctx.bind("java:TestDC", dataSource);
         } catch (NamingException e) {
             e.printStackTrace();
@@ -38,11 +40,7 @@ public class Example04 {
     @Test
     public void testJndi() {
         try {
-            Properties jndiProps = new Properties();
-            jndiProps.put(Context.INITIAL_CONTEXT_FACTORY, "org.apache.naming.java.javaURLContextFactory");
-            jndiProps.put(Context.URL_PKG_PREFIXES, "org.apache.naming");
-            Context ctx = new InitialContext(jndiProps);
-            DataSource dataSource = (DataSource) ctx.lookup("java:TestDC");
+           DataSource dataSource = (DataSource) ctx.lookup("java:TestDC");
             Connection conn = dataSource.getConnection();
             Assert.assertNotNull(conn);
         } catch (Exception e) {

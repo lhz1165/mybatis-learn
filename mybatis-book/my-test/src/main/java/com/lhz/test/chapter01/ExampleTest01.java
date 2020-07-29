@@ -1,4 +1,4 @@
-package com.blog4java.hsqldb;
+package com.lhz.test.chapter01;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.jdbc.ScriptRunner;
@@ -7,20 +7,23 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.sql.Connection;
-import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
-public class Example01 {
-
+/**
+ * @author: lhz
+ * @date: 2020/7/29
+ **/
+public class ExampleTest01 {
     private Connection conn = null;
     @Before
     public void initData() {
         try {
             // 加载HSQLDB驱动
             Class.forName("org.hsqldb.jdbcDriver");
+
             // 获取Connection对象
             conn = DriverManager.getConnection("jdbc:hsqldb:mem:mybatis",
                     "sa", "");

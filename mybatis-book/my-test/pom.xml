@@ -11,6 +11,28 @@
 
     <groupId>com.lhz</groupId>
     <artifactId>my-test</artifactId>
-
+    <dependencies>
+        <dependency>
+            <groupId>tomcat</groupId>
+            <artifactId>naming-java</artifactId>
+            <version>5.0.28</version>
+        </dependency>
+        <dependency>
+            <groupId>tomcat</groupId>
+            <artifactId>naming-common</artifactId>
+            <version>5.0.28</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+            <version>2.4.0</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 
 </project>
