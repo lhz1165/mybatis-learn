@@ -27,7 +27,7 @@ import java.util.ServiceLoader;
  * @author: lhz
  * @date: 2020/7/29
  **/
-public class JNDIExample {
+public class WayGetConnectionExample {
 
 
     /**
