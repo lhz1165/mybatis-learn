@@ -79,6 +79,7 @@ public class SqlRunner {
   public List<Map<String, Object>> selectAll(String sql, Object... args) throws SQLException {
     PreparedStatement ps = connection.prepareStatement(sql);
     try {
+      //为占位符设置值
       setParameters(ps, args);
       ResultSet rs = ps.executeQuery();
       return getResults(rs);
@@ -221,11 +222,15 @@ public class SqlRunner {
       List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
       List<String> columns = new ArrayList<String>();
       List<TypeHandler<?>> typeHandlers = new ArrayList<TypeHandler<?>>();
+      //判断列数
       ResultSetMetaData rsmd = rs.getMetaData();
+      //用这个循环来获取每列参数的类型处理器
       for (int i = 0, n = rsmd.getColumnCount(); i < n; i++) {
         columns.add(rsmd.getColumnLabel(i + 1));
         try {
+          //判断列的属性
           Class<?> type = Resources.classForName(rsmd.getColumnClassName(i + 1));
+          //处理器类型
           TypeHandler<?> typeHandler = typeHandlerRegistry.getTypeHandler(type);
           if (typeHandler == null) {
             typeHandler = typeHandlerRegistry.getTypeHandler(Object.class);
@@ -235,13 +240,16 @@ public class SqlRunner {
           typeHandlers.add(typeHandlerRegistry.getTypeHandler(Object.class));
         }
       }
+      //开始用处理器取获得每列的数据
       while (rs.next()) {
         Map<String, Object> row = new HashMap<String, Object>();
         for (int i = 0, n = columns.size(); i < n; i++) {
           String name = columns.get(i);
           TypeHandler<?> handler = typeHandlers.get(i);
+          //列名称 和  java基本数据类型的值
           row.put(name.toUpperCase(Locale.ENGLISH), handler.getResult(rs, name));
         }
+        //添加到集合
         list.add(row);
       }
       return list;

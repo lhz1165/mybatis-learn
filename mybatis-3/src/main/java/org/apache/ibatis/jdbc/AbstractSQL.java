@@ -274,7 +274,7 @@ public abstract class AbstractSQL<T> {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    // 调用SQLStatement对象的sql()方法生成SQL语句
+    // 调用SQLStatement对象的sql(sb)方法生成SQL语句
     sql().sql(sb);
     return sb.toString();
   }
@@ -417,35 +417,29 @@ public abstract class AbstractSQL<T> {
       return builder.toString();
     }
 
+
     public String sql(Appendable a) {
       SafeAppendable builder = new SafeAppendable(a);
       if (statementType == null) {
         return null;
       }
-
       String answer;
-
       switch (statementType) {
         case DELETE:
           answer = deleteSQL(builder);
           break;
-
         case INSERT:
           answer = insertSQL(builder);
           break;
-
         case SELECT:
           answer = selectSQL(builder);
           break;
-
         case UPDATE:
           answer = updateSQL(builder);
           break;
-
         default:
           answer = null;
       }
-
       return answer;
     }
   }

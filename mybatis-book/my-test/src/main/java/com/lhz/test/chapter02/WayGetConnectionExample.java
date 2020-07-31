@@ -37,6 +37,8 @@ public class WayGetConnectionExample {
      */
     @Test
     public void testJndi() throws IOException, SQLException {
+
+        //driver.connect()最后都调用了这个方法
         Connection connByJNID = getConnByDataSourceAndJNID();
         Connection connByDriverManager = getConnByDriverManager();
         Connection connByDataSourceAndProperties = getConnByDataSourceAndProperties();
@@ -73,6 +75,7 @@ public class WayGetConnectionExample {
             Class.forName("org.hsqldb.jdbcDriver");
             // 获取Connection对象
             Connection conn = DriverManager.getConnection("jdbc:hsqldb:mem:mybatis", "sa", "");
+            System.out.println(conn.getClass().getName());
             return conn;
         } catch (Exception e) {
             e.printStackTrace();

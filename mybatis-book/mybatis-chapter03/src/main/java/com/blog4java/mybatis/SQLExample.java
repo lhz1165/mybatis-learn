@@ -38,6 +38,7 @@ public class SQLExample {
                     ORDER_BY("P.ID");
                     ORDER_BY("P.FULL_NAME");
                 }}.toString();
+        System.out.println(newSql);
 
         assertEquals(orgSql, newSql);
     }

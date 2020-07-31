@@ -110,6 +110,7 @@ public class ScriptRunner {
         executeFullScript(reader);
       } else {
         // 调用executeLineByLine（）方法逐条执行脚本中的SQL语句
+        //重点解读一下
         executeLineByLine(reader);
       }
     } finally {
@@ -137,6 +138,10 @@ public class ScriptRunner {
     }
   }
 
+  /**
+   * 一行一行的读取sql语句
+   * @param reader
+   */
   private void executeLineByLine(Reader reader) {
     StringBuilder command = new StringBuilder();
     try {
@@ -200,14 +205,17 @@ public class ScriptRunner {
 
   private void handleLine(StringBuilder command, String line) throws SQLException {
     String trimmedLine = line.trim();
+    //判断是否是注释
     if (lineIsComment(trimmedLine)) {
       Matcher matcher = DELIMITER_PATTERN.matcher(trimmedLine);
       if (matcher.find()) {
         delimiter = matcher.group(5);
       }
       println(trimmedLine);
+      //是否正常的sql执行语句
     } else if (commandReadyToExecute(trimmedLine)) {
       command.append(line.substring(0, line.lastIndexOf(delimiter)));
+      //拼接/r/n
       command.append(LINE_SEPARATOR);
       println(command);
       executeStatement(command.toString());

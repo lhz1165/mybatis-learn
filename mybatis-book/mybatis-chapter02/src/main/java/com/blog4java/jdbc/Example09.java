@@ -21,6 +21,7 @@ public class Example09 {
         // 获取Connection对象
         Connection conn = DriverManager.getConnection("jdbc:hsqldb:mem:mybatis",
                 "sa", "");
+
         // 使用Mybatis的ScriptRunner工具类执行数据库脚本
         ScriptRunner scriptRunner = new ScriptRunner(conn);
         // 不输出sql日志

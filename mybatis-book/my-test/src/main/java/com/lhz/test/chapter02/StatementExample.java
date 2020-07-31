@@ -5,8 +5,9 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.jdbc.ScriptRunner;
 import org.junit.Test;
 
-import java.io.IOException;
+import java.io.*;
 import java.sql.*;
+import java.util.Arrays;
 
 /**
  * @author: lhz
@@ -21,7 +22,8 @@ public class StatementExample {
         // 使用Mybatis的ScriptRunner工具类执行数据库脚本
         ScriptRunner scriptRunner = new ScriptRunner(connection);
         // 不输出sql日志
-        scriptRunner.setLogWriter(null);
+        //scriptRunner.setLogWriter(null);
+        System.out.println(System.out.getClass());
         scriptRunner.runScript(Resources.getResourceAsReader("create-table.sql"));
         Statement statement = connection.createStatement();
         statement.addBatch("insert into  " +
@@ -47,7 +49,9 @@ public class StatementExample {
         // 使用Mybatis的ScriptRunner工具类执行数据库脚本
         ScriptRunner scriptRunner = new ScriptRunner(connection);
         // 不输出sql日志
-        scriptRunner.setLogWriter(null);
+        PrintWriter writer = new PrintWriter(System.out);
+
+        //scriptRunner.setLogWriter(writer);
         scriptRunner.runScript(Resources.getResourceAsReader("create-table.sql"));
         Statement statement = connection.createStatement();
         String sql = "insert into user(create_time, name, password, phone, nick_name) " +
