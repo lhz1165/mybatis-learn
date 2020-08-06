@@ -100,6 +100,7 @@ public abstract class BaseTypeHandler<T> extends TypeReference<T> implements Typ
     } catch (Exception e) {
       throw new ResultMapException("Error attempting to get column #" + columnIndex+ " from callable statement.  Cause: " + e, e);
     }
+
   }
 
   public abstract void setNonNullParameter(PreparedStatement ps, int i, T parameter, JdbcType jdbcType) throws SQLException;

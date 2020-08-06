@@ -6,6 +6,7 @@ import org.apache.ibatis.jdbc.SqlRunner;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
@@ -26,9 +27,11 @@ public class Example01 {
                     "sa", "");
             // 使用Mybatis的ScriptRunner工具类执行数据库脚本
             ScriptRunner scriptRunner = new ScriptRunner(conn);
-            scriptRunner.setLogWriter(null);
-            scriptRunner.runScript(Resources.getResourceAsReader("create-table.sql"));
-            scriptRunner.runScript(Resources.getResourceAsReader("init-data.sql"));
+            //scriptRunner.setLogWriter(null);
+//            scriptRunner.runScript(Resources.getResourceAsReader("create-table.sql"));
+//            scriptRunner.runScript(Resources.getResourceAsReader("init-data.sql"));
+            scriptRunner.runScript(new InputStreamReader(getClass().getClassLoader().getResourceAsStream("create-table.sql")));
+            scriptRunner.runScript(new InputStreamReader(getClass().getClassLoader().getResourceAsStream("init-data.sql")));
         } catch (Exception e) {
             e.printStackTrace();
         }

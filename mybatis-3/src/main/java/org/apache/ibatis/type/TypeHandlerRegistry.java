@@ -53,7 +53,7 @@ import org.apache.ibatis.reflection.Jdk;
  * @author Kazuki Shimizu
  */
 public final class TypeHandlerRegistry {
-
+  //jdbc类型和typehandler的映射
   private final Map<JdbcType, TypeHandler<?>> JDBC_TYPE_HANDLER_MAP = new EnumMap<JdbcType, TypeHandler<?>>(JdbcType.class);
   private final Map<Type, Map<JdbcType, TypeHandler<?>>> TYPE_HANDLER_MAP = new ConcurrentHashMap<Type, Map<JdbcType, TypeHandler<?>>>();
   private final TypeHandler<Object> UNKNOWN_TYPE_HANDLER = new UnknownTypeHandler(this);

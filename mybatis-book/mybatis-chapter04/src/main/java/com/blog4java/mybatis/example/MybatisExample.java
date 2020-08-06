@@ -39,7 +39,7 @@ public class MybatisExample {
          /*
         // 兼容Ibatis，通过Mapper Id执行SQL操作
         List<UserEntity> userList = sqlSession.selectList(
-                "com.blog4java.mybatis.com.blog4java.mybatis.example.mapper.UserMapper.listAllUser");
+                "com.blog4java.mybatis.example.mapper.UserMapper.listAllUser");
         */
         System.out.println(JSON.toJSONString(userList));
     }

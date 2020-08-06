@@ -122,20 +122,27 @@ public class Configuration {
    * @see <a href='https://code.google.com/p/mybatis/issues/detail?id=300'>Issue 300 (google code)</a>
    */
   protected Class<?> configurationFactory;
-
+  //注册mapper借口信息，建立mapper接口的class和 mapperProxyFactory对象之间的关系
   protected final MapperRegistry mapperRegistry = new MapperRegistry(this);
+  //mybatis插件 拦截器就是插件
   protected final InterceptorChain interceptorChain = new InterceptorChain();
+  //建立jdbc类型和handler的处理关系
   protected final TypeHandlerRegistry typeHandlerRegistry = new TypeHandlerRegistry();
+  //所有的别名
   protected final TypeAliasRegistry typeAliasRegistry = new TypeAliasRegistry();
   protected final LanguageDriverRegistry languageRegistry = new LanguageDriverRegistry();
-
+  //key为 <select id="xx" xx，MappedStatement为mapper里面的sql
   protected final Map<String, MappedStatement> mappedStatements = new StrictMap<MappedStatement>("Mapped Statements collection");
+  //key为命名空间  cache为缓存
   protected final Map<String, Cache> caches = new StrictMap<Cache>("Caches collection");
+  //ResultMap为《resultMpa》标签
   protected final Map<String, ResultMap> resultMaps = new StrictMap<ResultMap>("Result Maps collection");
   protected final Map<String, ParameterMap> parameterMaps = new StrictMap<ParameterMap>("Parameter Maps collection");
+  //主键生成器
   protected final Map<String, KeyGenerator> keyGenerators = new StrictMap<KeyGenerator>("Key Generators collection");
-
+  //注册所有配置文件的路径
   protected final Set<String> loadedResources = new HashSet<String>();
+  //mapper里面的<sql>片段
   protected final Map<String, XNode> sqlFragments = new StrictMap<XNode>("XML fragments parsed from previous mappers");
 
   // 存放解析异常的XMLStatementBuilder对象
@@ -530,6 +537,7 @@ public class Configuration {
     return MetaObject.forObject(object, objectFactory, objectWrapperFactory, reflectorFactory);
   }
 
+  //ParameterHandler的工厂方法
   public ParameterHandler newParameterHandler(MappedStatement mappedStatement, Object parameterObject, BoundSql boundSql) {
     ParameterHandler parameterHandler = mappedStatement.getLang().createParameterHandler(mappedStatement, parameterObject, boundSql);
     // 执行拦截器链的拦截逻辑

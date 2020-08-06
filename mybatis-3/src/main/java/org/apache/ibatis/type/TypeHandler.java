@@ -15,22 +15,27 @@
  */
 package org.apache.ibatis.type;
 
-import java.sql.CallableStatement;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 /**
  * @author Clinton Begin
  */
 public interface TypeHandler<T> {
 
+  //为对象设置参数  把java的类型转化成jdbc类型为sql赋值
   void setParameter(PreparedStatement ps, int i, T parameter, JdbcType jdbcType) throws SQLException;
 
+  //根据列名获取该列的值 把jdbc类型转化成java类型
   T getResult(ResultSet rs, String columnName) throws SQLException;
 
   T getResult(ResultSet rs, int columnIndex) throws SQLException;
 
   T getResult(CallableStatement cs, int columnIndex) throws SQLException;
+
+  Time t = new Time(1,2,3);
+
+  public static void main(String[] args) {
+    System.out.println(t);
+  }
 
 }
