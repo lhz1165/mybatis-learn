@@ -87,6 +87,8 @@ public class XMLConfigBuilder extends BaseBuilder {
     this.parser = parser;
   }
 
+
+  //解析xml配置文件
   public Configuration parse() {
     // 防止parse（）方法被同一个实例多次调用
     if (parsed) {
@@ -115,6 +117,8 @@ public class XMLConfigBuilder extends BaseBuilder {
       environmentsElement(root.evalNode("environments"));
       databaseIdProviderElement(root.evalNode("databaseIdProvider"));
       typeHandlerElement(root.evalNode("typeHandlers"));
+
+      //这是mapper.xml的<mapper标签的解析方法
       mapperElement(root.evalNode("mappers"));
     } catch (Exception e) {
       throw new BuilderException("Error parsing SQL Mapper Configuration. Cause: " + e, e);
@@ -368,7 +372,11 @@ public class XMLConfigBuilder extends BaseBuilder {
           String mapperPackage = child.getStringAttribute("name");
           configuration.addMappers(mapperPackage);
         } else {
+          //这是child <mapper resource="com/blog4java/mybatis/example/mapper/UserMapper.xml"/>
+
+          //xml的全路径名 com/blog4java/mybatis/example/mapper/UserMapper.xml
           String resource = child.getStringAttribute("resource");
+          //解析mapper为null
           String url = child.getStringAttribute("url");
           String mapperClass = child.getStringAttribute("class");
           // 通过resource属性指定XML文件路径
@@ -382,6 +390,8 @@ public class XMLConfigBuilder extends BaseBuilder {
             ErrorContext.instance().resource(url);
             InputStream inputStream = Resources.getUrlAsStream(url);
             XMLMapperBuilder mapperParser = new XMLMapperBuilder(inputStream, configuration, url, configuration.getSqlFragments());
+
+            //这一步mapperStatements被填充上了
             mapperParser.parse();
           } else if (resource == null && url == null && mapperClass != null) {
             // 通过class属性指定接口的完全限定名

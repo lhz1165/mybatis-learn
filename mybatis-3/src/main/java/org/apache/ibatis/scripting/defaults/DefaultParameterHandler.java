@@ -71,7 +71,7 @@ public class DefaultParameterHandler implements ParameterHandler {
           // 参数属性名称
           String propertyName = parameterMapping.getProperty();
           // 根据参数属性名称，获取参数值
-          if (boundSql.hasAdditionalParameter(propertyName)) { // issue #448 ask first for additional params
+          if (boundSql.hasAdditionalParameter(propertyName)) {  // issue #448 ask first for additional params
             value = boundSql.getAdditionalParameter(propertyName);
           } else if (parameterObject == null) {
             value = null;
@@ -90,9 +90,7 @@ public class DefaultParameterHandler implements ParameterHandler {
           try {
             // 调用TypeHandler的setParameter方法，为Statement对象参数占位符设置值
             typeHandler.setParameter(ps, i + 1, value, jdbcType);
-          } catch (TypeException e) {
-            throw new TypeException("Could not set parameters for mapping: " + parameterMapping + ". Cause: " + e, e);
-          } catch (SQLException e) {
+          } catch (TypeException | SQLException e) {
             throw new TypeException("Could not set parameters for mapping: " + parameterMapping + ". Cause: " + e, e);
           }
         }

@@ -17,4 +17,9 @@ public interface UserMapper {
 
     UserEntity getUserByPhone(@Param("phone") String phone);
 
+    @Select("select * from user where id=#{userId,jdbcType=INTEGER}")
+    UserEntity getUserByName(@Param("id") String phone);
+
+
+
 }

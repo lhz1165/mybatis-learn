@@ -17,6 +17,7 @@ public class ConfigurationExample {
         XMLConfigBuilder builder = new XMLConfigBuilder(reader);
         // 调用XMLConfigBuilder.parse（）方法，解析XML创建Configuration对象
         Configuration conf = builder.parse();
+        System.out.println();
     }
 
 }

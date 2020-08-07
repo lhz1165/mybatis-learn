@@ -49,6 +49,7 @@ public class MybatisExample {
         Reader mybatisConfig = Resources.getResourceAsReader("mybatis-config.xml");
         SqlSessionManager sqlSessionManager = SqlSessionManager.newInstance(mybatisConfig);
         sqlSessionManager.startManagedSession();
+
         UserMapper userMapper = sqlSessionManager.getMapper(UserMapper.class);
         List<UserEntity> userList = userMapper.listAllUser();
         System.out.println(JSON.toJSONString(userList));

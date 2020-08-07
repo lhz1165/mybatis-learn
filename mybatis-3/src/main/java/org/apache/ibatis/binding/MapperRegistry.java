@@ -40,6 +40,7 @@ public class MapperRegistry {
   public MapperRegistry(Configuration config) {
     this.config = config;
   }
+
   // 根据Mapper接口Class对象获取Mapper动态代理对象
   @SuppressWarnings("unchecked")
   public <T> T getMapper(Class<T> type, SqlSession sqlSession) {

@@ -31,6 +31,9 @@ public class XPathExample {
             // 创建DocumentBuilder实例
             DocumentBuilder builder = factory.newDocumentBuilder();
             InputStream inputSource = Resources.getResourceAsStream("users.xml");
+
+
+            //这代表配置文件
             Document doc = builder.parse(inputSource);
             // 获取XPath实例
             XPath xpath = XPathFactory.newInstance().newXPath();
