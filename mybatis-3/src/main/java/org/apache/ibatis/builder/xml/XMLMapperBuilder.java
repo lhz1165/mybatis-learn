@@ -99,18 +99,20 @@ import java.util.*;
       }
       // 设置当前正在解析的Mapper配置的命名空间
       builderAssistant.setCurrentNamespace(namespace);
-      // 解析<cache-ref>标签
-      cacheRefElement(context.evalNode("cache-ref"));
-      // 解析<cache>标签
-      cacheElement(context.evalNode("cache"));
-      // 解析所有的<parameterMap>标签
-      parameterMapElement(context.evalNodes("/mapper/parameterMap"));
+//      // 解析<cache-ref>标签
+//      cacheRefElement(context.evalNode("cache-ref"));
+//      // 解析<cache>标签
+//      cacheElement(context.evalNode("cache"));
+//      // 解析所有的<parameterMap>标签
+//      parameterMapElement(context.evalNodes("/mapper/parameterMap"));
       // 解析所有的<resultMap>标签
       resultMapElements(context.evalNodes("/mapper/resultMap"));
       // 解析所有的<sql>标签
-      sqlElement(context.evalNodes("/mapper/sql"));
+      List<XNode> xNodes = context.evalNodes("/mapper/sql");
+      sqlElement(xNodes);
       // 解析所有的<select|insert|update|delete>标签
-      buildStatementFromContext(context.evalNodes("select|insert|update|delete"));
+      List<XNode> sqlList = context.evalNodes("select|insert|update|delete");
+      buildStatementFromContext(sqlList);
     } catch (Exception e) {
       throw new BuilderException("Error parsing Mapper XML. The XML location is '" + resource + "'. Cause: " + e, e);
     }
@@ -124,6 +126,7 @@ import java.util.*;
   }
 
   private void buildStatementFromContext(List<XNode> list, String requiredDatabaseId) {
+    //list就是所有的sql语句
     for (XNode context : list) {
       // 通过XMLStatementBuilder对象，对<select|update|insert|delete>标签进行解析
       final XMLStatementBuilder statementParser = new XMLStatementBuilder(configuration, builderAssistant, context, requiredDatabaseId);

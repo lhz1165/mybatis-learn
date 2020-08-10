@@ -366,6 +366,7 @@ public class XMLConfigBuilder extends BaseBuilder {
 
   private void mapperElement(XNode parent) throws Exception {
     if (parent != null) {
+      //获取到mybatis-config.xml的mapper配置文件的位置   <mapper resource="com/blog4java/mybatis/example/mapper/UserMapper.xml"/>
       for (XNode child : parent.getChildren()) {
         // 通过<package>标签指定包名
         if ("package".equals(child.getName())) {
@@ -373,11 +374,11 @@ public class XMLConfigBuilder extends BaseBuilder {
           configuration.addMappers(mapperPackage);
         } else {
           //这是child <mapper resource="com/blog4java/mybatis/example/mapper/UserMapper.xml"/>
-
           //xml的全路径名 com/blog4java/mybatis/example/mapper/UserMapper.xml
           String resource = child.getStringAttribute("resource");
           //解析mapper为null
           String url = child.getStringAttribute("url");
+          //null
           String mapperClass = child.getStringAttribute("class");
           // 通过resource属性指定XML文件路径
           if (resource != null && url == null && mapperClass == null) {
