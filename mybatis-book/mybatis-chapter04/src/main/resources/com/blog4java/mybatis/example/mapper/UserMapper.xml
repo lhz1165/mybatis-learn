@@ -8,7 +8,7 @@
 
     <select id="listAllUser"  resultType="com.blog4java.mybatis.example.entity.UserEntity" >
         select
-        <include refid="userAllField"/>
+        id,create_time, name, password, phone, nick_name
         from user
     </select>
 

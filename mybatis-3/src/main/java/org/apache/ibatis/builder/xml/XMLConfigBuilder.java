@@ -97,6 +97,7 @@ public class XMLConfigBuilder extends BaseBuilder {
     parsed = true;
     // 调用XPathParser.evalNode（）方法，创建表示configuration节点的XNode对象。
     // 调用parseConfiguration（）方法对XNode进行处理
+    //创建mapperfactory的map结果集
     parseConfiguration(parser.evalNode("/configuration"));
     return configuration;
   }
@@ -119,6 +120,7 @@ public class XMLConfigBuilder extends BaseBuilder {
       typeHandlerElement(root.evalNode("typeHandlers"));
 
       //这是mapper.xml的<mapper标签的解析方法
+      //同时解析了mapper接口会生成proxyFactory
       mapperElement(root.evalNode("mappers"));
     } catch (Exception e) {
       throw new BuilderException("Error parsing SQL Mapper Configuration. Cause: " + e, e);
@@ -385,6 +387,9 @@ public class XMLConfigBuilder extends BaseBuilder {
             ErrorContext.instance().resource(resource);
             InputStream inputStream = Resources.getResourceAsStream(resource);
             XMLMapperBuilder mapperParser = new XMLMapperBuilder(inputStream, configuration, resource, configuration.getSqlFragments());
+
+
+            //解析mapper的关键
             mapperParser.parse();
           } else if (resource == null && url != null && mapperClass == null) {
             // 通过url属性指定XML文件路径

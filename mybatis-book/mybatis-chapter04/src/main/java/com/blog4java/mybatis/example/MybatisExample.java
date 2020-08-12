@@ -35,12 +35,12 @@ public class MybatisExample {
         // 获取UserMapper代理对象
         UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
         // 执行Mapper方法，获取执行结果
-        List<UserEntity> userList = userMapper.listAllUser();
-         /*
+       // List<UserEntity> userList = userMapper.listAllUser();
+
         // 兼容Ibatis，通过Mapper Id执行SQL操作
         List<UserEntity> userList = sqlSession.selectList(
                 "com.blog4java.mybatis.example.mapper.UserMapper.listAllUser");
-        */
+
         System.out.println(JSON.toJSONString(userList));
     }
 

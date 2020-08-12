@@ -44,7 +44,9 @@ public class MapperRegistry {
   // 根据Mapper接口Class对象获取Mapper动态代理对象
   @SuppressWarnings("unchecked")
   public <T> T getMapper(Class<T> type, SqlSession sqlSession) {
+    //这里代理对象以及创建好了
     final MapperProxyFactory<T> mapperProxyFactory = (MapperProxyFactory<T>) knownMappers.get(type);
+
     if (mapperProxyFactory == null) {
       throw new BindingException("Type " + type + " is not known to the MapperRegistry.");
     }

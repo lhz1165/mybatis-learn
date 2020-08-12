@@ -202,21 +202,21 @@ public class DefaultResultSetHandler implements ResultSetHandler {
     }
     // 如果JDBC驱动支持多结果集，可以通过<select>标签resultSets属性指定多个ResultMap
     // 处理<select>标签resultSets属性，该属性一般情况不会指定
-    String[] resultSets = mappedStatement.getResultSets();
-    if (resultSets != null) {
-      while (rsw != null && resultSetCount < resultSets.length) {
-        ResultMapping parentMapping = nextResultMaps.get(resultSets[resultSetCount]);
-        if (parentMapping != null) {
-          String nestedResultMapId = parentMapping.getNestedResultMapId();
-          ResultMap resultMap = configuration.getResultMap(nestedResultMapId);
-          //调用handleResultSet方法处理结果集
-          handleResultSet(rsw, resultMap, null, parentMapping);
-        }
-        rsw = getNextResultSet(stmt);
-        cleanUpAfterHandlingResultSet();
-        resultSetCount++;
-      }
-    }
+//    String[] resultSets = mappedStatement.getResultSets();
+//    if (resultSets != null) {
+//      while (rsw != null && resultSetCount < resultSets.length) {
+//        ResultMapping parentMapping = nextResultMaps.get(resultSets[resultSetCount]);
+//        if (parentMapping != null) {
+//          String nestedResultMapId = parentMapping.getNestedResultMapId();
+//          ResultMap resultMap = configuration.getResultMap(nestedResultMapId);
+//          //调用handleResultSet方法处理结果集
+//          handleResultSet(rsw, resultMap, null, parentMapping);
+//        }
+//        rsw = getNextResultSet(stmt);
+//        cleanUpAfterHandlingResultSet();
+//        resultSetCount++;
+//      }
+//    }
     // 对multipleResults进行处理，如果只有一个结果集，则返回结果集中的元素，否则返回多个结果集
     return collapseSingleResultList(multipleResults);
   }
@@ -312,6 +312,7 @@ public class DefaultResultSetHandler implements ResultSetHandler {
           // 获取处理后的结果
           multipleResults.add(defaultResultHandler.getResultList());
         } else {
+          //处理结果集
           handleRowValues(rsw, resultMap, resultHandler, rowBounds, null);
         }
       }

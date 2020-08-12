@@ -32,8 +32,7 @@ public class ExecutorExample {
         SqlSession sqlSession = sqlSessionFactory.openSession();
         Configuration configuration = sqlSession.getConfiguration();
         // 从Configuration对象中获取描述SQL配置的MappedStatement对象
-        MappedStatement listAllUserStmt = configuration.getMappedStatement(
-                "com.blog4java.mybatis.example.mapper.UserMapper.listAllUser");
+        MappedStatement listAllUserStmt = configuration.getMappedStatement("com.blog4java.mybatis.example.mapper.UserMapper.listAllUser");
         //创建ReuseExecutor实例
         Executor reuseExecutor = configuration.newExecutor(
                 new JdbcTransaction(sqlSession.getConnection()),

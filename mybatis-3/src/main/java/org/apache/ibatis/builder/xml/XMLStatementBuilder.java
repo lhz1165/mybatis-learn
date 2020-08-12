@@ -89,7 +89,8 @@ public class XMLStatementBuilder extends BaseBuilder {
     // 解析<selectKey>标签
     processSelectKeyNodes(id, parameterTypeClass, langDriver);
     
-    // 通过LanguageDriver解析SQL内容，生成SqlSource对象
+    // 通过LanguageDriver解析SQL内容，通过他来生成SqlSource对象
+    //里面有Mapper解析后的sql内容
     SqlSource sqlSource = langDriver.createSqlSource(configuration, context, parameterTypeClass);
     String resultSets = context.getStringAttribute("resultSets");
     String keyProperty = context.getStringAttribute("keyProperty");
@@ -97,6 +98,7 @@ public class XMLStatementBuilder extends BaseBuilder {
     KeyGenerator keyGenerator;
     String keyStatementId = id + SelectKeyGenerator.SELECT_KEY_SUFFIX;
     keyStatementId = builderAssistant.applyCurrentNamespace(keyStatementId, true);
+
     // 获取主键生成策略
     if (configuration.hasKeyGenerator(keyStatementId)) {
       keyGenerator = configuration.getKeyGenerator(keyStatementId);
@@ -105,7 +107,9 @@ public class XMLStatementBuilder extends BaseBuilder {
           configuration.isUseGeneratedKeys() && SqlCommandType.INSERT.equals(sqlCommandType))
           ? Jdbc3KeyGenerator.INSTANCE : NoKeyGenerator.INSTANCE;
     }
-
+    //辅助类
+    //用builderAssistant来生产mappedStatement
+    //然后把mappedStatement添加到configuration的集合里面去
     builderAssistant.addMappedStatement(id, sqlSource, statementType, sqlCommandType,
         fetchSize, timeout, parameterMap, parameterTypeClass, resultMap, resultTypeClass,
         resultSetTypeEnum, flushCache, useCache, resultOrdered, 

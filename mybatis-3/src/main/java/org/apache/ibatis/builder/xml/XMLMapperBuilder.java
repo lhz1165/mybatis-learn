@@ -71,11 +71,16 @@ import java.util.*;
   }
 
   public void parse() {
+    //resource代表 mapper的路径
     if (!configuration.isResourceLoaded(resource)) {
       // 调用XPathParser的evalNode（）方法获取根节点对应的XNode对象
+      //这些node节点包括mapper.xml里面的关键节点包括select,insert等
       configurationElement(parser.evalNode("/mapper"));
       // 將资源路径添加到Configuration对象中
       configuration.addLoadedResource(resource);
+
+
+      //获取产生mapper.java文件代理对象的 MapperProxyFactory
       bindMapperForNamespace();
     }
     // 继续解析之前解析出现异常的ResultMap对象
@@ -110,8 +115,11 @@ import java.util.*;
       // 解析所有的<sql>标签
       List<XNode> xNodes = context.evalNodes("/mapper/sql");
       sqlElement(xNodes);
+
       // 解析所有的<select|insert|update|delete>标签
       List<XNode> sqlList = context.evalNodes("select|insert|update|delete");
+
+      //构建sql语句 然后构成mappedStatement，把它添加到configuration对象的集合里面去
       buildStatementFromContext(sqlList);
     } catch (Exception e) {
       throw new BuilderException("Error parsing Mapper XML. The XML location is '" + resource + "'. Cause: " + e, e);
@@ -126,12 +134,15 @@ import java.util.*;
   }
 
   private void buildStatementFromContext(List<XNode> list, String requiredDatabaseId) {
-    //list就是所有的sql语句
+    //list就是所有的sql语句的node对象
     for (XNode context : list) {
-      // 通过XMLStatementBuilder对象，对<select|update|insert|delete>标签进行解析
+      // 通过XMLStatementBuilder对象，为每个sql创建一个builder
+      // 对<select|update|insert|delete>标签进行解析
       final XMLStatementBuilder statementParser = new XMLStatementBuilder(configuration, builderAssistant, context, requiredDatabaseId);
       try {
-        // 调用parseStatementNode（）方法解析
+        // 调用builder的parseStatementNode（）方法解析
+
+        //解析mappedstatement 添加到configuration里面去
         statementParser.parseStatementNode();
       } catch (IncompleteElementException e) {
         configuration.addIncompleteStatement(statementParser);
@@ -422,5 +433,4 @@ import java.util.*;
       }
     }
   }
-
 }
