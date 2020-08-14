@@ -25,7 +25,7 @@ public class ExecutorExample {
     @Test
     public void testExecutor() throws IOException, SQLException {
         // 获取配置文件输入流
-        InputStream inputStream = Resources.getResourceAsStream("mybatis-config.xml");
+        InputStream inputStream = Resources.getResourceAsStream("mybatis-config2.xml");
         // 通过SqlSessionFactoryBuilder的build()方法创建SqlSessionFactory实例
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
         // 调用openSession()方法创建SqlSession实例

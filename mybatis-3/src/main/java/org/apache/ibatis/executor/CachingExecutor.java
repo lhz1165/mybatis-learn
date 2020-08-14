@@ -101,7 +101,7 @@ public class CachingExecutor implements Executor {
         @SuppressWarnings("unchecked")
         List<E> list = (List<E>) tcm.getObject(cache, key);
         if (list == null) {
-          // 如果缓存数据不存在，则从数据库中查询数据
+          // 如果缓存数据不存在，则从一级缓存里面查找数据库中查询数据
           list = delegate.<E> query(ms, parameterObject, rowBounds, resultHandler, key, boundSql);
           // 將数据存放到MappedStatement对象对应的二级缓存中
           tcm.putObject(cache, key, list); // issue #578 and #116

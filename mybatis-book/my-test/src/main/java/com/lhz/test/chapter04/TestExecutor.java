@@ -11,7 +11,6 @@ import org.apache.ibatis.transaction.jdbc.JdbcTransaction;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.File;
 import java.io.InputStream;
 import java.util.List;
 
@@ -27,7 +26,7 @@ public class TestExecutor {
 
     @Test
     public void testExecutor() throws Exception{
-        InputStream inputStream = Resources.getResourceAsStream("mybatis-config.xml");
+        InputStream inputStream = Resources.getResourceAsStream("mybatis-config2.xml");
         SqlSessionFactory sessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
         SqlSession sqlSession = sessionFactory.openSession();
         Configuration configuration = sqlSession.getConfiguration();

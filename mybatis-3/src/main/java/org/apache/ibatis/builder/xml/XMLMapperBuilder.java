@@ -75,6 +75,7 @@ import java.util.*;
     if (!configuration.isResourceLoaded(resource)) {
       // 调用XPathParser的evalNode（）方法获取根节点对应的XNode对象
       //这些node节点包括mapper.xml里面的关键节点包括select,insert等
+      //这一步也设置缓存
       configurationElement(parser.evalNode("/mapper"));
       // 將资源路径添加到Configuration对象中
       configuration.addLoadedResource(resource);
@@ -105,11 +106,11 @@ import java.util.*;
       // 设置当前正在解析的Mapper配置的命名空间
       builderAssistant.setCurrentNamespace(namespace);
 //      // 解析<cache-ref>标签
-//      cacheRefElement(context.evalNode("cache-ref"));
+      cacheRefElement(context.evalNode("cache-ref"));
 //      // 解析<cache>标签
-//      cacheElement(context.evalNode("cache"));
+     cacheElement(context.evalNode("cache"));
 //      // 解析所有的<parameterMap>标签
-//      parameterMapElement(context.evalNodes("/mapper/parameterMap"));
+      parameterMapElement(context.evalNodes("/mapper/parameterMap"));
       // 解析所有的<resultMap>标签
       resultMapElements(context.evalNodes("/mapper/resultMap"));
       // 解析所有的<sql>标签

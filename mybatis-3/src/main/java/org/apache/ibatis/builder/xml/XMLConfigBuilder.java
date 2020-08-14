@@ -387,8 +387,6 @@ public class XMLConfigBuilder extends BaseBuilder {
             ErrorContext.instance().resource(resource);
             InputStream inputStream = Resources.getResourceAsStream(resource);
             XMLMapperBuilder mapperParser = new XMLMapperBuilder(inputStream, configuration, resource, configuration.getSqlFragments());
-
-
             //解析mapper的关键
             mapperParser.parse();
           } else if (resource == null && url != null && mapperClass == null) {

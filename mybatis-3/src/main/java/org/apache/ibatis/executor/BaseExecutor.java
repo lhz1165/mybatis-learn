@@ -51,9 +51,9 @@ public abstract class BaseExecutor implements Executor {
   protected Executor wrapper;
 
   protected ConcurrentLinkedQueue<DeferredLoad> deferredLoads;
-  // Mybatis一级缓存对象
+  // Mybatis一级缓存对象 查询结果
   protected PerpetualCache localCache;
-  // 存储过程输出参数缓存
+  // 存储过程输出参数缓存 存储过程调用
   protected PerpetualCache localOutputParameterCache;
   protected Configuration configuration;
 
@@ -201,9 +201,13 @@ public abstract class BaseExecutor implements Executor {
     }
     CacheKey cacheKey = new CacheKey();
     cacheKey.update(ms.getId()); // Mapper Id
+
     cacheKey.update(rowBounds.getOffset()); // 偏移量
+
     cacheKey.update(rowBounds.getLimit()); // 条数
+
     cacheKey.update(boundSql.getSql()); // SQL语句
+
     List<ParameterMapping> parameterMappings = boundSql.getParameterMappings();
     TypeHandlerRegistry typeHandlerRegistry = ms.getConfiguration().getTypeHandlerRegistry();
     // 所有参数值

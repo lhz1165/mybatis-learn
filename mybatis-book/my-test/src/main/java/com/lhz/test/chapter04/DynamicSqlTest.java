@@ -10,7 +10,6 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.List;
@@ -40,7 +39,7 @@ public class DynamicSqlTest {
     @Test
     public void testDymicSql() throws Exception {
         SqlSessionFactoryBuilder builder = new SqlSessionFactoryBuilder();
-        SqlSessionFactory sessionFactory = builder.build(Resources.getResourceAsReader("mybatis-config.xml"));
+        SqlSessionFactory sessionFactory = builder.build(Resources.getResourceAsReader("mybatis-config2.xml"));
         SqlSession sqlSession = sessionFactory.openSession();
         UserMapper mapper = sqlSession.getMapper(UserMapper.class);
         List<UserEntity> userEntities = mapper.listAllUser();

@@ -577,6 +577,7 @@ public class Configuration {
       executor = new SimpleExecutor(this, transaction);
     }
     // 如果cacheEnabled属性为ture，这使用CachingExecutor对上面创建的Executor进行装饰
+    //cacheEnabled = false;
     if (cacheEnabled) {
       executor = new CachingExecutor(executor);
     }
