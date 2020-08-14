@@ -147,3 +147,19 @@ MappedStatement.Builder statementBuilder = new MappedStatement.Builder(configura
     .cache(currentCache);
 ```
 
+## 二级缓存使用
+
+```
+在CachingExecutor维护了一个
+ private final TransactionalCacheManager tcm = new TransactionalCacheManager();
+tcm中又维护了一个
+// 通过HashMap对象维护二级缓存对应的TransactionalCache实例
+  private final Map<Cache, TransactionalCache> transactionalCaches = new HashMap<Cache, TransactionalCache>();
+
+```
+
+  transactionalCaches这就是二级缓存，Map保存了Cache和用`TransactionalCache`包装后的Cache的映射关系
+
+key代表mappedStatement创建的cache对象是SynchoriezCache，以命名空间为id，
+
+在`getObject`方法中，会把获取值的职责一路传递，最终到`PerpetualCache`。如果没有查到，会把key加入Miss集合，这个主要是为了统计命中率。

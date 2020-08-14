@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.blog4java.common.DbUtils;
 import com.blog4java.mybatis.example.entity.StudentEntity;
 import com.blog4java.mybatis.example.entity.UserEntity;
+import com.blog4java.mybatis.example.mapper.ClassMapper;
 import com.blog4java.mybatis.example.mapper.StudentMapper;
 import com.blog4java.mybatis.example.mapper.UserMapper;
 import org.apache.ibatis.io.Resources;
@@ -32,14 +33,37 @@ public class MybatisExample {
          SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(Resources.getResourceAsReader("mybatis-config2.xml"));
 
 
-        SqlSession sqlSession = factory.openSession(true); // 自动提交事务
-        StudentMapper studentMapper = sqlSession.getMapper(StudentMapper.class);
+        SqlSession sqlSession1 = factory.openSession(true);
+        SqlSession sqlSession2 = factory.openSession(true);
 
-        System.out.println(studentMapper.getStudentById(1));
-        System.out.println("增加了" + studentMapper.addStudent(buildStudent()) + "个学生");
-        System.out.println(studentMapper.getStudentById(1));
+        StudentMapper studentMapper = sqlSession1.getMapper(StudentMapper.class);
+        StudentMapper studentMapper2 = sqlSession2.getMapper(StudentMapper.class);
 
-        sqlSession.close();
+        System.out.println("studentMapper读取数据: " + studentMapper.getStudentById(1));
+        sqlSession1.commit();
+        System.out.println("studentMapper2读取数据: " + studentMapper2.getStudentById(1));
+
+    }
+
+    @Test
+    public void testCacheWithDiffererntNamespace() throws Exception {
+        SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(Resources.getResourceAsReader("mybatis-config2.xml"));
+        SqlSession sqlSession1 = factory.openSession(true);
+        SqlSession sqlSession2 = factory.openSession(true);
+        SqlSession sqlSession3 = factory.openSession(true);
+
+        StudentMapper studentMapper = sqlSession1.getMapper(StudentMapper.class);
+        StudentMapper studentMapper2 = sqlSession2.getMapper(StudentMapper.class);
+        ClassMapper classMapper = sqlSession3.getMapper(ClassMapper.class);
+
+        System.out.println("studentMapper读取数据: " + studentMapper.getStudentByIdWithClassInfo(1));
+        sqlSession1.close();
+        System.out.println("studentMapper2读取数据: " + studentMapper2.getStudentByIdWithClassInfo(1));
+
+        classMapper.updateClassName("特色一班",1);
+        sqlSession3.commit();
+        //出现脏数据
+        System.out.println("studentMapper2读取数据: " + studentMapper2.getStudentByIdWithClassInfo(1));
     }
 
     private StudentEntity buildStudent(){
