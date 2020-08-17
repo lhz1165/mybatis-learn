@@ -46,6 +46,9 @@ public class XMLLanguageDriver implements LanguageDriver {
     return builder.parseScriptNode();
   }
 
+  /**
+   * java注解里面的sql信息
+   */
   @Override
   public SqlSource createSqlSource(Configuration configuration, String script, Class<?> parameterType) {
     // 该方法用于解析Java注解中配置的SQL信息
