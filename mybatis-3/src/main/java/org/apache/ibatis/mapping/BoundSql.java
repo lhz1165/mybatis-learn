@@ -39,7 +39,7 @@ public class BoundSql {
   private final String sql;
   // Mapper参数映射信息
   private final List<ParameterMapping> parameterMappings;
-  // Mapper参数对象
+  // Mapper接口传入参数对象
   private final Object parameterObject;
   // 额外参数信息，包括<bind>标签绑定的参数，内置参数
   private final Map<String, Object> additionalParameters;
