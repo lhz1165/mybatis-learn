@@ -9,6 +9,10 @@
 	</settings>
 
 	<plugins>
+		<plugin interceptor="com.blog4java.plugin.pager.ExamplePlugin">
+
+		</plugin>
+
 		<plugin interceptor="com.blog4java.plugin.pager.PageInterceptor">
 			<property name="databaseType" value="hsqldb"/>
 		</plugin>

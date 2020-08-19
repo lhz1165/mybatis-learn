@@ -5,6 +5,7 @@ import com.blog4java.common.DbUtils;
 import com.blog4java.mybatis.example.entity.UserEntity;
 import com.blog4java.mybatis.example.mapper.UserMapper;
 import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.scripting.xmltags.*;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -60,7 +61,7 @@ public class DynamicSqlExample {
 
     @Test
     public void testSqlNode() {
-        // 构建SqlNode
+        // 构建SqlNode(在builder里面这些node)
         SqlNode sn1 = new StaticTextSqlNode("select * from user where 1=1");
         SqlNode sn2 = new IfSqlNode(new StaticTextSqlNode(" AND id = #{id}"),"id != null");
         SqlNode sn3 = new IfSqlNode(new StaticTextSqlNode(" AND name = #{name}"),"name != null");
@@ -75,6 +76,9 @@ public class DynamicSqlExample {
         mixedSqlNode.apply(context);
         // 调用DynamicContext对象的getSql（）方法获取动态SQL解析后的SQL语句
         System.out.println(context.getSql());
+
+        DynamicSqlSource sqlSource = new DynamicSqlSource(sqlSession.getConfiguration(),mixedSqlNode);
+        BoundSql boundSql = sqlSource.getBoundSql(paramMap);
     }
 
 

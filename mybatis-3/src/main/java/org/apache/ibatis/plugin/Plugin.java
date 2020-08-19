@@ -50,7 +50,8 @@ public class Plugin implements InvocationHandler {
    * @return
    */
   public static Object wrap(Object target, Interceptor interceptor) {
-    // 调用getSignatureMap（）方法获取自定义插件中，通过Intercepts注解指定的方法
+    // 调用getSignatureMap（）方法获取自定义插件中，
+    // 通过Intercepts注解指定要拦截的方法
     Map<Class<?>, Set<Method>> signatureMap = getSignatureMap(interceptor);
     Class<?> type = target.getClass();
     Class<?>[] interfaces = getAllInterfaces(type, signatureMap);
@@ -78,14 +79,17 @@ public class Plugin implements InvocationHandler {
   }
 
   private static Map<Class<?>, Set<Method>> getSignatureMap(Interceptor interceptor) {
-    // 获取Intercepts注解信息
+    // 获取某个拦截器的,Intercepts注解信息
     Intercepts interceptsAnnotation = interceptor.getClass().getAnnotation(Intercepts.class);
     if (interceptsAnnotation == null) {
       throw new PluginException("No @Intercepts annotation was found in interceptor " + interceptor.getClass().getName());      
     }
-    // 获取所有Signature注解信息
+    // 获取所有Signature注解信息，
+    // 一个拦截器可以有多个Signature
     Signature[] sigs = interceptsAnnotation.value();
+    //拦截哪个类的哪些方法
     Map<Class<?>, Set<Method>> signatureMap = new HashMap<Class<?>, Set<Method>>();
+
     // 对所有Signature注解进行遍历，把Signature注解指定拦截的组件及方法添加到Map中
     for (Signature sig : sigs) {
       Set<Method> methods = signatureMap.get(sig.type());
