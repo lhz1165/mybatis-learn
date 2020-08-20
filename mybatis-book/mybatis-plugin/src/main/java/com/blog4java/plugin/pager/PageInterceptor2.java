@@ -3,6 +3,7 @@ package com.blog4java.plugin.pager;
 import com.blog4java.common.IOUtils;
 import com.blog4java.plugin.utils.ReflectionUtils;
 import org.apache.ibatis.executor.parameter.ParameterHandler;
+import org.apache.ibatis.executor.resultset.ResultSetHandler;
 import org.apache.ibatis.executor.statement.RoutingStatementHandler;
 import org.apache.ibatis.executor.statement.StatementHandler;
 import org.apache.ibatis.mapping.BoundSql;
@@ -18,10 +19,10 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Properties;
 
-//@Intercepts({
-//        @Signature(method = "prepare", type = StatementHandler.class, args = {Connection.class, Integer.class})
-//})
-public class PageInterceptor implements Interceptor {
+@Intercepts({
+        @Signature(method = "prepare", type = ResultSetHandler.class, args = {Connection.class, Integer.class})
+})
+public class PageInterceptor2 implements Interceptor {
 
     private String databaseType;
 
@@ -52,7 +53,6 @@ public class PageInterceptor implements Interceptor {
             // 将原始SQL语句替换成分页语句
             ReflectionUtils.setFieldValue(boundSql, "sql", pageSql);
         }
-        //最后再执行拦截的方法
         return invocation.proceed();
     }
 
