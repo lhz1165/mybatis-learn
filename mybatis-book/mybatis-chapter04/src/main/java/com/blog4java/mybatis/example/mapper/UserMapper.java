@@ -13,12 +13,12 @@ public interface UserMapper {
     @Select("select * from user where id=#{userId,jdbcType=INTEGER}")
     UserEntity getUserById(@Param("userId") String userId);
 
-//    List<UserEntity> getUserByEntity( UserEntity user);
-//
-//    UserEntity getUserByPhone(@Param("phone") String phone);
-//
-//    @Select("select * from user where id=#{userId,jdbcType=INTEGER}")
-//    UserEntity getUserByName(@Param("id") String phone);
+    List<UserEntity> getUserByEntity( UserEntity user);
+
+    UserEntity getUserByPhone(@Param("phone") String phone);
+
+    @Select("select * from user where id=#{userId,jdbcType=INTEGER}")
+    UserEntity getUserByName(@Param("id") String phone);
 
 
 

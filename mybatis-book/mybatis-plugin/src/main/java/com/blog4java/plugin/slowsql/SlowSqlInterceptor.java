@@ -35,6 +35,7 @@ public class SlowSqlInterceptor implements Interceptor {
             long costTimeMillis = endTimeMillis - beginTimeMillis;
             if (costTimeMillis > limitSecond * 1000) {
                 BoundSql boundSql = statementHandler.getBoundSql();
+                System.out.println(boundSql.getSql());
                 // 调用getFormatedSql（）方法对参数占位符进行替换
                 String sql = getFormatedSql(boundSql);
                 System.out.println("SQL语句【" + sql + "】，执行耗时：" + costTimeMillis + "ms");

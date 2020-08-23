@@ -72,6 +72,7 @@ public class ComplexQueryExample {
     @Test
     public void testOne2ManyQuery() {
         User user = userMapper.getUserByIdFull(1L);
+        System.out.println();
     }
 
     @Test
@@ -82,16 +83,17 @@ public class ComplexQueryExample {
 
     @Test
     public void testGetOrderByNoWithJoin() {
-        Order order = orderMapper.getOrderByNoWithJoin("order_2314234");
+        Order order = orderMapper.getOrderByNoWithJoin("order_2314236");
         System.out.println(JSON.toJSONString(order));
     }
 
     @Test
     public void testLazyQuery() {
         Order order =  orderMapper.getOrderByNo("order_2314234");
-        System.out.println("完成Order数据查询");
+        System.out.println("完成Order数据查询" );
         // 调用getUser（）方法时执行懒加载
         order.getUser();
+        System.out.println();
     }
 
     @Test

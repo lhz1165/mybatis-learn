@@ -184,6 +184,7 @@ public class DefaultResultSetHandler implements ResultSetHandler {
     final List<Object> multipleResults = new ArrayList<Object>();
     int resultSetCount = 0;
     // 1、获取ResultSet对象，將ResultSet对象包装为ResultSetWrapper
+    //里面有这条记录的所有列的java类型，列名，jdbc类型的集合
     ResultSetWrapper rsw = getFirstResultSet(stmt);
     // 2、获取ResultMap信息，一般只有一个ResultMap
     List<ResultMap> resultMaps = mappedStatement.getResultMaps();
@@ -192,6 +193,13 @@ public class DefaultResultSetHandler implements ResultSetHandler {
     validateResultMapsCount(rsw, resultMapCount);
     // 如果指定了多个ResultMap，则对每个ResultMap进行处理
     while (rsw != null && resultMapCount > resultSetCount) {
+      /**
+       * resultMappings 集合是包含原本类型的字段名例如再order----->user 一对多模型中
+       * resultMappings就代表order对象的基本属性，包括user属性
+       *
+       * mappedColumns就只代表order表的字段，不包括user属性
+       *
+       */
       ResultMap resultMap = resultMaps.get(resultSetCount);
       // 3、调用handleResultSet方法处理结果集
       handleResultSet(rsw, resultMap, multipleResults, null);
@@ -356,7 +364,10 @@ public class DefaultResultSetHandler implements ResultSetHandler {
           + "or ensure your statement returns ordered data and set resultOrdered=true on it.");
     }
   }
-
+  /*
+  *
+  * 处理结果集
+  * */
   private void handleRowValuesForSimpleResultMap(ResultSetWrapper rsw, ResultMap resultMap, ResultHandler<?> resultHandler, RowBounds rowBounds, ResultMapping parentMapping)
       throws SQLException {
     DefaultResultContext<Object> resultContext = new DefaultResultContext<Object>();

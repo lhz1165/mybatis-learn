@@ -14,33 +14,12 @@
 <!--        <setting name="cacheEnabled" value="true"/>-->
 <!--    </settings>-->
 
-<!--    <environments default="dev">-->
-<!--        <environment id="dev">-->
-<!--            <transactionManager type="JDBC">-->
-<!--                <property name="" value=""/>-->
-<!--            </transactionManager>-->
-<!--            <dataSource type="UNPOOLED">-->
-<!--                <property name="driver" value="org.hsqldb.jdbcDriver"/>-->
-<!--                <property name="url" value="jdbc:hsqldb:mem:mybatis"/>-->
-<!--                <property name="username" value="sa"/>-->
-<!--                <property name="password" value=""/>-->
-<!--            </dataSource>-->
-<!--        </environment>-->
-<!--        <environment id="qa">-->
-<!--            <transactionManager type="JDBC">-->
-<!--                <property name="" value=""/>-->
-<!--            </transactionManager>-->
-<!--            <dataSource type="UNPOOLED">-->
-<!--                <property name="driver" value="org.hsqldb.jdbcDriver"/>-->
-<!--                <property name="url" value="jdbc:hsqldb:mem:mybatis_qa"/>-->
-<!--                <property name="username" value="admin"/>-->
-<!--                <property name="password" value="admin"/>-->
-<!--            </dataSource>-->
-<!--        </environment>-->
-<!--    </environments>-->
+
 <configuration>
     <!--配置文件地址-->
     <properties resource="local-mysql.properties"/>
+
+
 
     <settings>
         <setting name="localCacheScope" value="SESSION"/>
@@ -49,21 +28,57 @@
         <setting name="mapUnderscoreToCamelCase" value="true"/>
         <setting name="logImpl" value="LOG4J"/>
     </settings>
+<!--    <plugins>-->
+<!--        -->
+<!--        <plugin interceptor="com.blog4java.plugin.pager.PageInterceptor">-->
+<!--            <property name="databaseType" value="hsqldb"/>-->
+<!--        </plugin>-->
+<!--        &lt;!&ndash;		<plugin interceptor="com.blog4java.plugin.pager.ExamplePlugin">&ndash;&gt;-->
+<!--        &lt;!&ndash;		</plugin>&ndash;&gt;-->
 
-    <environments default="development">
-        <environment id="development">
-            <!--使用默认的JDBC事务管理-->
-            <transactionManager type="JDBC"/>
-            <!--使用连接池-->
-            <dataSource type="POOLED">
-                <!--这里会替换为local-mysql.properties中的对应字段的值-->
-                <property name="driver" value="${driver}"/>
-                <property name="url" value="${url}"/>
-                <property name="username" value="${username}"/>
-                <property name="password" value="${password}"/>
+<!--        <plugin interceptor="com.blog4java.plugin.slowsql.SlowSqlInterceptor">-->
+<!--            <property name="limitSecond" value="0"/>-->
+<!--        </plugin>-->
+<!--    </plugins>-->
+    <environments default="dev">
+        <environment id="dev">
+            <transactionManager type="JDBC">
+                <property name="" value=""/>
+            </transactionManager>
+            <dataSource type="UNPOOLED">
+                <property name="driver" value="org.hsqldb.jdbcDriver"/>
+                <property name="url" value="jdbc:hsqldb:mem:mybatis"/>
+                <property name="username" value="sa"/>
+                <property name="password" value=""/>
+            </dataSource>
+        </environment>
+        <environment id="qa">
+            <transactionManager type="JDBC">
+                <property name="" value=""/>
+            </transactionManager>
+            <dataSource type="UNPOOLED">
+                <property name="driver" value="org.hsqldb.jdbcDriver"/>
+                <property name="url" value="jdbc:hsqldb:mem:mybatis_qa"/>
+                <property name="username" value="admin"/>
+                <property name="password" value="admin"/>
             </dataSource>
         </environment>
     </environments>
+
+<!--    <environments default="development">-->
+<!--        <environment id="development">-->
+<!--            &lt;!&ndash;使用默认的JDBC事务管理&ndash;&gt;-->
+<!--            <transactionManager type="JDBC"/>-->
+<!--            &lt;!&ndash;使用连接池&ndash;&gt;-->
+<!--            <dataSource type="POOLED">-->
+<!--                &lt;!&ndash;这里会替换为local-mysql.properties中的对应字段的值&ndash;&gt;-->
+<!--                <property name="driver" value="${driver}"/>-->
+<!--                <property name="url" value="${url}"/>-->
+<!--                <property name="username" value="${username}"/>-->
+<!--                <property name="password" value="${password}"/>-->
+<!--            </dataSource>-->
+<!--        </environment>-->
+<!--    </environments>-->
 
     <mappers>
         <mapper resource="com/blog4java/mybatis/example/mapper/UserMapper.xml"/>

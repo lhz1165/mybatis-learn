@@ -130,6 +130,10 @@ public final class LogFactory {
   private static void setImplementation(Class<? extends Log> implClass) {
     try {
       // 获取日志实现类的Constructor对象
+      if (implClass.getName().contains("Log4jImpl")) {
+        System.out.println(implClass);
+
+      }
       Constructor<? extends Log> candidate = implClass.getConstructor(String.class);
       // 根据日志实现类创建Log实例
       Log log = candidate.newInstance(LogFactory.class.getName());
