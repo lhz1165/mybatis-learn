@@ -14,27 +14,27 @@
         from user
     </select>
 
-<!--    <select id="getUserByEntity"  resultType="com.blog4java.mybatis.example.entity.UserEntity" useCache="true">-->
-<!--        select-->
-<!--        <include refid="userAllField"/>-->
-<!--        from user-->
-<!--        <where>-->
-<!--            <if test="id != null">-->
-<!--                AND id = #{id}-->
-<!--            </if>-->
-<!--            <if test="name != null">-->
-<!--                AND name = #{name}-->
-<!--            </if>-->
-<!--            <if test="phone != null">-->
-<!--                AND phone = #{phone}-->
-<!--            </if>-->
-<!--        </where>-->
-<!--    </select>-->
+    <select id="getUserByEntity"  resultType="com.blog4java.mybatis.example.entity.UserEntity" useCache="true">
+        select
+        <include refid="userAllField"/>
+        from user
+        <where>
+            <if test="id != null">
+                AND id = #{id}
+            </if>
+            <if test="name != null">
+                AND name = #{name}
+            </if>
+            <if test="phone != null">
+                AND phone = #{phone}
+            </if>
+        </where>
+    </select>
 
-<!--    <select id="getUserByPhone" resultType="com.blog4java.mybatis.example.entity.UserEntity">-->
-<!--        select-->
-<!--        <include refid="userAllField"/>-->
-<!--        from user-->
-<!--        where phone = ${phone}-->
-<!--    </select>-->
+    <select id="getUserByPhone" resultType="com.blog4java.mybatis.example.entity.UserEntity">
+        select
+        <include refid="userAllField"/>
+        from user
+        where phone = ${phone}
+    </select>
 </mapper>

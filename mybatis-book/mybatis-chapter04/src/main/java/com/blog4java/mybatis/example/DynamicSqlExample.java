@@ -1,5 +1,6 @@
 package com.blog4java.mybatis.example;
 
+import com.alibaba.fastjson.JSON;
 import com.blog4java.common.DbUtils;
 import com.blog4java.mybatis.example.entity.UserEntity;
 import com.blog4java.mybatis.example.mapper.UserMapper;
@@ -12,6 +13,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 public class DynamicSqlExample {
 
@@ -32,8 +34,9 @@ public class DynamicSqlExample {
         UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
         UserEntity entity = new UserEntity();
         entity.setPhone("18700001111");
-//        List<UserEntity> userList =  userMapper.getUserByEntity(entity);
-//        System.out.println(JSON.toJSONString(userList));
+        entity.setId(10L);
+        List<UserEntity> userList =  userMapper.getUserByEntity(entity);
+        System.out.println(JSON.toJSONString(userList));
 
     }
 

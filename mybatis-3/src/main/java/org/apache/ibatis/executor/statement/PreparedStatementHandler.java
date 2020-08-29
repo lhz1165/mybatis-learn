@@ -57,6 +57,7 @@ public class PreparedStatementHandler extends BaseStatementHandler {
   public <E> List<E> query(Statement statement, ResultHandler resultHandler) throws SQLException {
     PreparedStatement ps = (PreparedStatement) statement;
     // 调用PreparedStatement对象的execute()方法，执行SQL语句
+    //打印参数
     ps.execute();
     // 调用ResultSetHandler的handleResultSets（）方法处理结果集
     return resultSetHandler.<E> handleResultSets(ps);
