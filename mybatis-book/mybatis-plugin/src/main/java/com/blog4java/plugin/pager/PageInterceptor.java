@@ -18,9 +18,9 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Properties;
 
-//@Intercepts({
-//        @Signature(method = "prepare", type = StatementHandler.class, args = {Connection.class, Integer.class})
-//})
+@Intercepts({
+        @Signature(method = "prepare", type = StatementHandler.class, args = {Connection.class, Integer.class})
+})
 public class PageInterceptor implements Interceptor {
 
     private String databaseType;

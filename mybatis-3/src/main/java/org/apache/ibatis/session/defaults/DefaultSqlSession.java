@@ -149,6 +149,7 @@ public class DefaultSqlSession implements SqlSession {
     } finally {
       ErrorContext.instance().reset();
     }
+
   }
 
   @Override

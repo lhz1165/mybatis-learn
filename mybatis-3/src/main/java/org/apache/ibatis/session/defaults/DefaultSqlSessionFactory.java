@@ -35,6 +35,14 @@ public class DefaultSqlSessionFactory implements SqlSessionFactory {
   private final Configuration configuration;
 
   public DefaultSqlSessionFactory(Configuration configuration) {
+    System.out.println("                  _           _   _     \n" +
+            "                 | |         | | (_)    \n" +
+            "  _ __ ___  _   _| |__   __ _| |_ _ ___ \n" +
+            " | '_ ` _ \\| | | | '_ \\ / _` | __| / __|\n" +
+            " | | | | | | |_| | |_) | (_| | |_| \\__ \\\n" +
+            " |_| |_| |_|\\__, |_.__/ \\__,_|\\__|_|___/\n" +
+            "             __/ |                      \n" +
+            "            |___/                       ");
     this.configuration = configuration;
   }
 

@@ -184,6 +184,7 @@ public class DefaultResultSetHandler implements ResultSetHandler {
     final List<Object> multipleResults = new ArrayList<Object>();
     int resultSetCount = 0;
     // 1、获取ResultSet对象，將ResultSet对象包装为ResultSetWrapper
+    //里面有这条记录的所有列的java类型，列名，jdbc类型的集合
     ResultSetWrapper rsw = getFirstResultSet(stmt);
     // 2、获取ResultMap信息，一般只有一个ResultMap
     List<ResultMap> resultMaps = mappedStatement.getResultMaps();
@@ -192,6 +193,13 @@ public class DefaultResultSetHandler implements ResultSetHandler {
     validateResultMapsCount(rsw, resultMapCount);
     // 如果指定了多个ResultMap，则对每个ResultMap进行处理
     while (rsw != null && resultMapCount > resultSetCount) {
+      /**
+       * resultMappings 集合是包含原本类型的字段名例如再order----->user 一对多模型中
+       * resultMappings就代表order对象的基本属性，包括user属性
+       *
+       * mappedColumns就只代表order表的字段，不包括user属性
+       *
+       */
       ResultMap resultMap = resultMaps.get(resultSetCount);
       // 3、调用handleResultSet方法处理结果集
       handleResultSet(rsw, resultMap, multipleResults, null);
@@ -202,21 +210,21 @@ public class DefaultResultSetHandler implements ResultSetHandler {
     }
     // 如果JDBC驱动支持多结果集，可以通过<select>标签resultSets属性指定多个ResultMap
     // 处理<select>标签resultSets属性，该属性一般情况不会指定
-//    String[] resultSets = mappedStatement.getResultSets();
-//    if (resultSets != null) {
-//      while (rsw != null && resultSetCount < resultSets.length) {
-//        ResultMapping parentMapping = nextResultMaps.get(resultSets[resultSetCount]);
-//        if (parentMapping != null) {
-//          String nestedResultMapId = parentMapping.getNestedResultMapId();
-//          ResultMap resultMap = configuration.getResultMap(nestedResultMapId);
-//          //调用handleResultSet方法处理结果集
-//          handleResultSet(rsw, resultMap, null, parentMapping);
-//        }
-//        rsw = getNextResultSet(stmt);
-//        cleanUpAfterHandlingResultSet();
-//        resultSetCount++;
-//      }
-//    }
+    String[] resultSets = mappedStatement.getResultSets();
+    if (resultSets != null) {
+      while (rsw != null && resultSetCount < resultSets.length) {
+        ResultMapping parentMapping = nextResultMaps.get(resultSets[resultSetCount]);
+        if (parentMapping != null) {
+          String nestedResultMapId = parentMapping.getNestedResultMapId();
+          ResultMap resultMap = configuration.getResultMap(nestedResultMapId);
+          //调用handleResultSet方法处理结果集
+          handleResultSet(rsw, resultMap, null, parentMapping);
+        }
+        rsw = getNextResultSet(stmt);
+        cleanUpAfterHandlingResultSet();
+        resultSetCount++;
+      }
+    }
     // 对multipleResults进行处理，如果只有一个结果集，则返回结果集中的元素，否则返回多个结果集
     return collapseSingleResultList(multipleResults);
   }
@@ -356,7 +364,10 @@ public class DefaultResultSetHandler implements ResultSetHandler {
           + "or ensure your statement returns ordered data and set resultOrdered=true on it.");
     }
   }
-
+  /*
+  *
+  * 处理结果集
+  * */
   private void handleRowValuesForSimpleResultMap(ResultSetWrapper rsw, ResultMap resultMap, ResultHandler<?> resultHandler, RowBounds rowBounds, ResultMapping parentMapping)
       throws SQLException {
     DefaultResultContext<Object> resultContext = new DefaultResultContext<Object>();
@@ -928,7 +939,7 @@ public class DefaultResultSetHandler implements ResultSetHandler {
     } else {
       // ResultLoaderMap用于存放懒加载ResultMap信息
       final ResultLoaderMap lazyLoader = new ResultLoaderMap();
-      // 处理通过<constructor>标签配置的构造器映射
+      // 处理通过<constructor>标签配置的构造器映射 一般返回一个未初始化成员变量的对象，属性全是null
       rowValue = createResultObject(rsw, resultMap, lazyLoader, columnPrefix);
       // 判断结果对象是否注册对应的TypeHandler
       if (rowValue != null && !hasTypeHandlerForResultObject(rsw, resultMap.getType())) {
@@ -941,6 +952,7 @@ public class DefaultResultSetHandler implements ResultSetHandler {
           foundValues = applyAutomaticMappings(rsw, resultMap, metaObject, columnPrefix) || foundValues;
         }
         // 处理非<id>,<constructor>指定的映射
+        // 1获取列名 2获取数据库查出来的列值 3获取属性名 4把查出来的列值赋值给属性 除了表以外的字段比如user对象（嵌套映射）
         foundValues = applyPropertyMappings(rsw, resultMap, metaObject, lazyLoader, columnPrefix) || foundValues;
         putAncestor(rowValue, resultMapId);
         // 处理嵌套的映射
@@ -968,7 +980,7 @@ public class DefaultResultSetHandler implements ResultSetHandler {
       if (nestedResultMapId != null && resultMapping.getResultSet() == null) {
         try {
           final String columnPrefix = getColumnPrefix(parentPrefix, resultMapping);
-          // 对所有ResultMap映射信息进行遍历，获取嵌套的ResultMap，然后为嵌套ResultMap对应的实体属性设置值
+          // 对所有ResultMap映射信息进行遍历，获取嵌套的ResultMap，然后为嵌套ResultMap对应的实体属性设置值   <result column="name" property="name"></result> 类似于这种嵌套的属性user对象的的属性
           final ResultMap nestedResultMap = getNestedResultMap(rsw.getResultSet(), nestedResultMapId, columnPrefix);
           if (resultMapping.getColumnPrefix() == null) {
             // 当未指定columnPrefix属性时，从缓存中获取嵌套的ResultMap对应的Java实体对象，避免循环引用问题
