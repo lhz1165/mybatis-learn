@@ -50,6 +50,7 @@ public final class ConnectionLogger extends BaseJdbcLogger implements Invocation
       }    
       if ("prepareStatement".equals(method.getName())) {
         if (isDebugEnabled()) {
+          //打印sql语句
           debug(" Preparing: " + removeBreakingWhitespace((String) params[0]), true);
         }        
         PreparedStatement stmt = (PreparedStatement) method.invoke(connection, params);
