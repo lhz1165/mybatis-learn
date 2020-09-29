@@ -15,6 +15,14 @@ public class MyProxy implements InvocationHandler {
         this.targetInterface = targetInterface;
     }
 
+    /**
+     *
+     * @param proxy  Proxy.class
+     * @param method
+     * @param args
+     * @return
+     * @throws Throwable
+     */
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         System.out.println("-------------");

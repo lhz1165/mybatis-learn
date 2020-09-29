@@ -15,9 +15,16 @@ public class MyProxyFactory<T> {
         this.targetClass = target;
     }
 
-    public T getMyProxy(MyProxy proxy) {
 
-        return (T)Proxy.newProxyInstance(targetClass.getClassLoader(),new Class[]{targetClass},proxy);
+
+    public T newInstance(MyTarget target) {
+        MyProxy myProxy = new MyProxy(target);
+        return newInstance(myProxy);
     }
+
+    public T newInstance( MyProxy myProxy) {
+        return (T)Proxy.newProxyInstance(targetClass.getClassLoader(),new Class[]{targetClass},myProxy);
+    }
+
 
 }
