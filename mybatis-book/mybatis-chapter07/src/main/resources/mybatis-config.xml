@@ -23,17 +23,17 @@
 				<property name="password" value="" />
 			</dataSource>
 		</environment>
-		<environment id="qa">
-			<transactionManager type="JDBC">
-				<property name="" value="" />
-			</transactionManager>
-			<dataSource type="UNPOOLED">
-				<property name="driver" value="org.hsqldb.jdbcDriver" />
-				<property name="url" value="jdbc:hsqldb:mem:mybatis_qa" />
-				<property name="username" value="admin" />
-				<property name="password" value="admin" />
-			</dataSource>
-		</environment>
+<!--		<environment id="qa">-->
+<!--			<transactionManager type="JDBC">-->
+<!--				<property name="" value="" />-->
+<!--			</transactionManager>-->
+<!--			<dataSource type="UNPOOLED">-->
+<!--				<property name="driver" value="org.hsqldb.jdbcDriver" />-->
+<!--				<property name="url" value="jdbc:hsqldb:mem:mybatis_qa" />-->
+<!--				<property name="username" value="admin" />-->
+<!--				<property name="password" value="admin" />-->
+<!--			</dataSource>-->
+<!--		</environment>-->
 	</environments>
 
 	<mappers>
