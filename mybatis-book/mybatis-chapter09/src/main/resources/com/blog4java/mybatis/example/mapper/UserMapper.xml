@@ -45,8 +45,7 @@
         <include refid="userAllField"/>
         from user
         where phone in
-        <foreach item="phone" index="index" collection="phones"
-                 open="(" separator="," close=")">
+        <foreach item="phone" index="index" collection="phones" open="(" separator="," close=")">
             #{phone}
         </foreach>
     </select>
