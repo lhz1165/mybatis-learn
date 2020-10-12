@@ -1,4 +1,4 @@
-[<<<Parent](../)
+[<<<Parent](../../)
 # Mybatis的动态sql
 
 - [Mybatis动态SQL-1](md/Mybatis动态SQL-1.md)
