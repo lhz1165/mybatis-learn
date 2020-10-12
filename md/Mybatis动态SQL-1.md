@@ -3,7 +3,7 @@
 
 ## 标签
 
-<if>，<where>,<choose|when|otherwise>
+<if|>，<where|>,<choose|when|otherwise>
 
 <foreach>用例
 
