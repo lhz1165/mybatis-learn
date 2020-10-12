@@ -1,3 +1,4 @@
+[<<<Parent](../Mybatis的动态sql.md)
 # Mybatis动态SQL-2
 
 ## SqlSource和BoundSql
