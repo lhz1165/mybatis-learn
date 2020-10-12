@@ -1,4 +1,4 @@
-[<<<Parent](../../)
+[<<<Parent](../)
 # Mybatis动态SQL-1
 
 ## 标签
