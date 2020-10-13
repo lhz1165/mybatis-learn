@@ -47,7 +47,17 @@ public class StaticSqlSource implements SqlSource {
 
 显而易见，这个类描述的sql信息，他封装了Mapper解析后的sql内容与参数映射信息，该有的都有了，所以他就是最总描述sql信息的类。
 
-但是光有了参数映射信息，那参数信息在哪呢，这个秘密就放在BoundSql之中,看看他的数据结构，就明了了
+## BoundSql
+
+但是光有了参数映射信息，那参数信息在哪呢，这个秘密就放在BoundSql之中,看看他的数据结构，就明了了，
+
+例如：
+
+**sql** : select * from user where id = ? and phone =?;
+
+**parameterMappings**:   [property=id  typehanler=IntegerTypeHandler   javaType=int jdbctype="numberic"],[property=phonetypehanler=StringTypeHandler   javaType=stringjdbctype="varchar"]
+
+**parameterObject**: User =[id =1 phone ="123456"]
 
 ```java
 public class BoundSql {
@@ -98,6 +108,8 @@ sqlNode就是sql的节点，是动态 sql的基石，就代表trim if  foreach..
 
 apply一般来说就是拼接sql，把各种node构建成一个完整的sql
 
+**补充**:${}就是通过TextSqlNode的apply方法把${}处替换为对应值的sql
+
 ```java
 public interface SqlNode {
   boolean apply(DynamicContext context);
@@ -125,3 +137,4 @@ public class MixedSqlNode implements SqlNode {
   }
 }
 ```
+

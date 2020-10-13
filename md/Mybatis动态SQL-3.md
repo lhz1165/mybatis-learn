@@ -39,7 +39,7 @@ parseDynamicTags()就是遍历所有的node对象来往MixedSqlNode添加node的
 
 最终MixedSqlNode对象包含了一个所有sqlNode对象的集合
 
-## sqlNode根据参数生成动态sql
+## 第二步 在MappedStatment中生成sql信息对象(BoundSql)
 
 上面的过程是把mapper的配置生成sqlNode，那么如果把传递过来的参数给生成sql语句呢？
 
@@ -103,4 +103,14 @@ public BoundSql getBoundSql(Object parameterObject) {
 
 ## 总结
 
-在解析configuration生成初始化过程之中（SqlSessionFactory的build()），把Mapper通过**LanguageDriver**被解析成**MixedSqlNode**，然后利用**MixedSqlNode**作为构造函数的初始值，构建**SqlSource**，然后把**SqlSource**添加到**MappedStatement**对象之中，要读取sql，就调用**MappedStatement**的**getBoundSql**()方法，这样就会间接的调用**sqlSource**的**getBoundSql**()方法(就是上面的方法)，从而获取动态的sql语句。
+在解析configuration生成初始化过程之中（SqlSessionFactory的build()），会获得一个SqlSource，描述sql资源信息的对象。
+
+1.把Mapper通过**LanguageDriver**解析成**MixedSqlNode**。
+
+SqlNode对象是描述<if|where|choose>..等标签信息，一个sql所有标签组合起来构成了**MixedSqlNode**
+
+2.然后利用**MixedSqlNode**作为构造函数的初始值，封装在SqlSource对象之中构建**SqlSource**（**DynamicSqlSource**）。select * from t where t.id =#{id}
+
+3.把**SqlSource**添加到**MappedStatement**对象之中，要读取sql，就调用**MappedStatement**的**getBoundSql**()方法，这样就会间接的调用**sqlSource**的**getBoundSql**()方法(就是上面的方法)，把动态sql解析成静态sql(**StaticSqlSource**)select * from t where t.id =?
+
+从而获取动态的sql语句以及参数的映射信息以及参数，为最终的查询做准备。
