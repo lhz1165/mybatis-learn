@@ -1,4 +1,4 @@
-[<<<README](../README.md)
+[<<<动态sql](/md/Mybatis的缓存.md)
 # Mybatis的一级缓存
 
 **概述:**Mybatis的一级缓存是默认开始的，并且不能关闭，因为Mybatis的核心特性，例如<collection>和<association>建立级联映射，以及避免循环引用都是基于一级缓存实现的，可以配置作用域，STATEMENT和SESSION,分别是执行完一条语句就清除缓存和对于当前SqlSession都有效。
