@@ -79,6 +79,8 @@ public class DynamicSqlExample {
 
         DynamicSqlSource sqlSource = new DynamicSqlSource(sqlSession.getConfiguration(),mixedSqlNode);
         BoundSql boundSql = sqlSource.getBoundSql(paramMap);
+        System.out.println(boundSql.getSql());
+
     }
 
 
