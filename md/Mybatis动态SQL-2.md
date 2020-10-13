@@ -96,6 +96,8 @@ sqlNode就是sql的节点，是动态 sql的基石，就代表trim if  foreach..
 
 根据动态的参数信息，生成静态的sql
 
+apply一般来说就是拼接sql，把各种node构建成一个完整的sql
+
 ```java
 public interface SqlNode {
   boolean apply(DynamicContext context);
