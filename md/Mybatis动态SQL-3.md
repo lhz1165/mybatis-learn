@@ -1,4 +1,4 @@
-[<<<Parent](../Mybatis的动态sql.md)
+[<<<动态sql](../Mybatis的动态sql.md)
 # Mybatis动态SQL-3
 
 有了之前的学习，我们对动态sql的基本配件有了一定的了解，现在来了解以下动态sql的解析过程.

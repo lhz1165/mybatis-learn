@@ -1,4 +1,4 @@
-[<<<Parent](../README.md)
+[<<<README](../README.md)
 
 # Mybatis插件
 

@@ -1,4 +1,4 @@
-[<<<Parent](README.md)
+[<<<README](../README.md)
 # Mybatis的二级缓存
 
 解析mapper分三步
