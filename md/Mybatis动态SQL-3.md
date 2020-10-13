@@ -98,3 +98,9 @@ public BoundSql getBoundSql(Object parameterObject) {
   return boundSql;
 }
 ```
+
+
+
+## 总结
+
+在解析configuration生成初始化过程之中（SqlSessionFactory的build()），把Mapper通过**LanguageDriver**被解析成**MixedSqlNode**，然后利用**MixedSqlNode**作为构造函数的初始值，构建**SqlSource**，然后把**SqlSource**添加到**MappedStatement**对象之中，要读取sql，就调用**MappedStatement**的**getBoundSql**()方法，这样就会间接的调用**sqlSource**的**getBoundSql**()方法(就是上面的方法)，从而获取动态的sql语句。
