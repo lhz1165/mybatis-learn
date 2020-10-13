@@ -1,4 +1,4 @@
-[<<<README](../../)
+[<<<README](/README.md)
 # Mybatis的缓存
 
 - [Mybatis一级缓存](/md/Mybatis的一级缓存.md)
