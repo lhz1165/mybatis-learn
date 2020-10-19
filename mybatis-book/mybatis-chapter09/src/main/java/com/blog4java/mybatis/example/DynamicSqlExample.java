@@ -86,7 +86,7 @@ public class DynamicSqlExample {
 
     @Test
     public void testGetUserByName() {
-        String userName = "'Test4'";
+        String userName = "User4";
         UserEntity userEntity = userMapper.getUserByName(userName);
         System.out.println(userEntity);
     }

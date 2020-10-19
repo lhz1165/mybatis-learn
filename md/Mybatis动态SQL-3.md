@@ -3,7 +3,7 @@
 
 有了之前的学习，我们对动态sql的基本配件有了一定的了解，现在来了解以下动态sql的解析过程.
 
-## 第一步从LanguageDriver出发
+## 第一步从LanguageDriver出发（解析configuration文件）
 
 ```java
 @Override
@@ -39,7 +39,7 @@ parseDynamicTags()就是遍历所有的node对象来往MixedSqlNode添加node的
 
 最终MixedSqlNode对象包含了一个所有sqlNode对象的集合
 
-## 第二步 在MappedStatment中生成sql信息对象(BoundSql)
+## 第二步 在MappedStatment中生成sql信息对象(BoundSql)，执行mapper接口方法，用传入的参数来构建sql
 
 上面的过程是把mapper的配置生成sqlNode，那么如果把传递过来的参数给生成sql语句呢？
 
@@ -101,6 +101,8 @@ public BoundSql getBoundSql(Object parameterObject) {
 
 
 
+其中上面的sqlSourceParser.parse(context.getSql(), parameterType, context.getBindings());方法很关键,他的作用是构造参数的映射信息对象(ParamterMapping对象之前有说到的)。
+
 ## 总结
 
 在解析configuration生成初始化过程之中（SqlSessionFactory的build()），会获得一个SqlSource，描述sql资源信息的对象。
@@ -114,3 +116,4 @@ SqlNode对象是描述<if|where|choose>..等标签信息，一个sql所有标签
 3.把**SqlSource**添加到**MappedStatement**对象之中，要读取sql，就调用**MappedStatement**的**getBoundSql**()方法，这样就会间接的调用**sqlSource**的**getBoundSql**()方法(就是上面的方法)，把动态sql解析成静态sql(**StaticSqlSource**)select * from t where t.id =?
 
 从而获取动态的sql语句以及参数的映射信息以及参数，为最终的查询做准备。
+

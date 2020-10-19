@@ -3,7 +3,7 @@
 
 ## SqlSource和BoundSql
 
-SqlSource接口就一个方法， getBoundSql(Object parameterObject)，真正的sql就放在BoundSq之中
+SqlSource接口就一个方法，getBoundSql(Object parameterObject)，真正的sql就放在BoundSq之中
 
 实现类介绍
 
@@ -16,6 +16,8 @@ SqlSource接口就一个方法， getBoundSql(Object parameterObject)，真正�
 **RawSqlSource**：xml解析生成的sql资源信息，但是他不是动态sql
 
 **StaticSqlSource**：用来描述上面三者解析后的sql信息，总之，无论那种方式最终都会是用StaticSqlSource来描述sql资源信息.
+
+**<u>SqlSource的创建过程是再解析Configuration对象的时候生成的里面只有sql的参数映射信息</u>**
 
 ```java
 public class StaticSqlSource implements SqlSource {
@@ -49,11 +51,13 @@ public class StaticSqlSource implements SqlSource {
 
 ## BoundSql
 
+**<u>BoundSql是在调用mapper接口方法的时候得到的，通过传入的参数对象，来获取参数的具体信息，和早先的sqlSource的参数映射信息相结合使用</u>**
+
 但是光有了参数映射信息，那参数信息在哪呢，这个秘密就放在BoundSql之中,看看他的数据结构，就明了了，
 
 例如：
 
-**sql** : select * from user where id = ? and phone =?;
+**sql** : select * from user where id = ? and phone =?;(sqlSource就有的)
 
 **parameterMappings**:   [property=id  typehanler=IntegerTypeHandler   javaType=int jdbctype="numberic"],[property=phonetypehanler=StringTypeHandler   javaType=stringjdbctype="varchar"]
 

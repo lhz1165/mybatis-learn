@@ -61,9 +61,9 @@
         #end
     </select>
 
-    <select id="getUserByName" parameterType="java.lang.String"
-            resultType="com.blog4java.mybatis.example.entity.UserEntity">
-      select * from user where name = ${userName}
+    <select id="getUserByName"
+            resultType="com.blog4java.mybatis.example.entity.UserEntity" >
+      select * from user where name = #{userName}
     </select>
 
 
