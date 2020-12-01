@@ -21,7 +21,8 @@ public class Example01 {
     public void initData() {
         try {
             // 加载HSQLDB驱动
-            Class.forName("org.hsqldb.jdbcDriver");
+            Class<?> name = Class.forName("org.hsqldb.jdbcDriver");
+            Object o = name.newInstance();
             // 获取Connection对象
             conn = DriverManager.getConnection("jdbc:hsqldb:mem:mybatis",
                     "sa", "");

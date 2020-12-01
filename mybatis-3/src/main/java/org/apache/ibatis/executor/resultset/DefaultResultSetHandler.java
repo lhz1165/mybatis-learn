@@ -194,7 +194,7 @@ public class DefaultResultSetHandler implements ResultSetHandler {
     // 如果指定了多个ResultMap，则对每个ResultMap进行处理
     while (rsw != null && resultMapCount > resultSetCount) {
       /**
-       * resultMappings 集合是包含原本类型的字段名例如再order----->user 一对多模型中
+       * resultMappings 集合是包含原本类型的字段名例如再order----->user 一对1模型中
        * resultMappings就代表order对象的基本属性，包括user属性
        *
        * mappedColumns就只代表order表的字段，不包括user属性
@@ -940,6 +940,7 @@ public class DefaultResultSetHandler implements ResultSetHandler {
       // ResultLoaderMap用于存放懒加载ResultMap信息
       final ResultLoaderMap lazyLoader = new ResultLoaderMap();
       // 处理通过<constructor>标签配置的构造器映射 一般返回一个未初始化成员变量的对象，属性全是null
+        //1111111 先创造一个未初始化的主对象！！！！！！
       rowValue = createResultObject(rsw, resultMap, lazyLoader, columnPrefix);
       // 判断结果对象是否注册对应的TypeHandler
       if (rowValue != null && !hasTypeHandlerForResultObject(rsw, resultMap.getType())) {
@@ -951,11 +952,13 @@ public class DefaultResultSetHandler implements ResultSetHandler {
           // 调用applyAutomaticMappings（）方法处理自动映射
           foundValues = applyAutomaticMappings(rsw, resultMap, metaObject, columnPrefix) || foundValues;
         }
+        ////2222222 在这里为主对象赋值 除了关联表对象还是null !!!!!
         // 处理非<id>,<constructor>指定的映射
         // 1获取列名 2获取数据库查出来的列值 3获取属性名 4把查出来的列值赋值给属性 除了表以外的字段比如user对象（嵌套映射）
         foundValues = applyPropertyMappings(rsw, resultMap, metaObject, lazyLoader, columnPrefix) || foundValues;
         putAncestor(rowValue, resultMapId);
         // 处理嵌套的映射
+          //33333 处理关联表的对象
         foundValues = applyNestedResultMappings(rsw, resultMap, metaObject, columnPrefix, combinedKey, true) || foundValues;
         ancestorObjects.remove(resultMapId);
         foundValues = lazyLoader.size() > 0 || foundValues;

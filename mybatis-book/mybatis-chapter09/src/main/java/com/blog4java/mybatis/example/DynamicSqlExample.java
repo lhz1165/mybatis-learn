@@ -7,6 +7,7 @@ import com.blog4java.mybatis.example.mapper.UserMapper;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.scripting.xmltags.*;
+import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
@@ -34,6 +35,7 @@ public class DynamicSqlExample {
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
         // 调用openSession()方法创建SqlSession实例
         sqlSession = sqlSessionFactory.openSession();
+        Configuration configuration = sqlSession.getConfiguration();
         // 获取UserMapper代理对象
         userMapper = sqlSession.getMapper(UserMapper.class);
     }
