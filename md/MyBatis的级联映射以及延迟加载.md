@@ -1,4 +1,4 @@
-[<<<README](/README.md]
+[<<<README](/README.md)
 
 # MyBatis的级联映射以及延迟加载
 
