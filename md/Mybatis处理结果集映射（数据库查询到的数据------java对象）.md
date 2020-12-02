@@ -1,4 +1,4 @@
-[<<<README](/md/MyBatis的级联映射以及延迟加载.md)
+[<<<MyBatis的级联映射以及延迟加载.md](/md/MyBatis的级联映射以及延迟加载.md)
 # Mybatis处理结果集映射（数据库查询到的数据------>java对象）
 
 ```
@@ -23,7 +23,17 @@
         </association>
     </resultMap>
 -----------------------------------------------------------------------------------------
-        @Test
+    public class Order {
+        private Long id;
+        private Date createTime;
+        private BigDecimal amount;
+        private Long userId;
+        private String orderNo;
+        private String address;
+        private User user;       
+
+
+     @Test
     public void testGetOrderByNoWithJoin() {
         Order order = orderMapper.getOrderByNoWithJoin("order_2314236");
         System.out.println(JSON.toJSONString(order));

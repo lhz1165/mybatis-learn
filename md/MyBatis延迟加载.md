@@ -1,4 +1,4 @@
-[<<<README](/md/MyBatis的级联映射以及延迟加载.md)
+[<<<MyBatis的级联映射以及延迟加载.md](/md/MyBatis的级联映射以及延迟加载.md)
 # MyBatis延迟加载
 
 Mybatis可以通过，<collection//>或者<association//>标签来嵌套一个外部mapper，来达到关联查询的目的
@@ -20,6 +20,17 @@ Mybatis可以通过，<collection//>或者<association//>标签来嵌套一个�
 <select id="getOrderByNo" resultMap="detailMap">
     select * from "order" where orderNo = #{orderNo}
 </select>
+
+    public class Order {
+        private Long id;
+        private Date createTime;
+        private BigDecimal amount;
+        private Long userId;
+        private String orderNo;
+        private String address;
+        private User user;   
+} 
+
 
 Order order =  orderMapper.getOrderByNo("order_2314234");
 
