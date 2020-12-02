@@ -13,4 +13,17 @@ public class Order {
     private String orderNo;
     private String address;
     private User user;
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", createTime=" + createTime +
+                ", amount=" + amount +
+                ", userId=" + userId +
+                ", orderNo='" + orderNo + '\'' +
+                ", address='" + address + '\'' +
+                ", user=" + user +
+                '}';
+    }
 }

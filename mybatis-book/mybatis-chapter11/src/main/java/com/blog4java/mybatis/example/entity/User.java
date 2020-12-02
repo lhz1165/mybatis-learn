@@ -81,4 +81,18 @@ public class User {
     public void setOrders(List<Order> orders) {
         this.orders = orders;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", createTime=" + createTime +
+                ", password='" + password + '\'' +
+                ", phone='" + phone + '\'' +
+                ", gender='" + gender + '\'' +
+                ", nickName='" + nickName + '\'' +
+                ", orders=" + orders +
+                '}';
+    }
 }

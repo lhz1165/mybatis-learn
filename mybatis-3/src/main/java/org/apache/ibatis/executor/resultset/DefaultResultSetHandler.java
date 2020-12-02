@@ -425,6 +425,8 @@ public class DefaultResultSetHandler implements ResultSetHandler {
       // 判断是否需要处理自动映射
       if (shouldApplyAutomaticMappings(resultMap, false)) {
         // 调用applyAutomaticMappings（）方法处理自动映射的字段
+          //如果不配置result标签来映射属性和列
+          //那么这里自动
         foundValues = applyAutomaticMappings(rsw, resultMap, metaObject, null) || foundValues;
       }
       // 处理<result>标签配置映射的字段
@@ -553,6 +555,7 @@ public class DefaultResultSetHandler implements ResultSetHandler {
         if (value != null) {
           foundValues = true;
         }
+        //
         if (value != null || (configuration.isCallSettersOnNulls() && !mapping.primitive)) {
           // 调用MetaObject对象的setValue（）方法为返回的实体对象赋值
           metaObject.setValue(mapping.property, value);

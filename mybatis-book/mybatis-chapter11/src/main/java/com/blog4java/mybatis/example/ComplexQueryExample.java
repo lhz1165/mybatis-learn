@@ -92,8 +92,8 @@ public class ComplexQueryExample {
         Order order =  orderMapper.getOrderByNo("order_2314234");
         System.out.println("完成Order数据查询" );
         // 调用getUser（）方法时执行懒加载
-        //order.getUser();
-        System.out.println();
+        order.getUser();
+        System.out.println(order);
     }
 
     @Test
