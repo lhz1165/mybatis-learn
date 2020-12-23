@@ -113,7 +113,10 @@ SqlNode对象是描述<if|where|choose>..等标签信息，一个sql所有标签
 
 2.然后利用**MixedSqlNode**作为构造函数的初始值，封装在SqlSource对象之中构建**SqlSource**（**DynamicSqlSource**）。select * from t where t.id =#{id}
 
-3.把**SqlSource**添加到**MappedStatement**对象之中，要读取sql，就调用**MappedStatement**的**getBoundSql**()方法，这样就会间接的调用**sqlSource**的**getBoundSql**()方法(就是上面的方法)，把动态sql解析成静态sql(**StaticSqlSource**)select * from t where t.id =?
+3.把**SqlSource**添加到**MappedStatement**对象之中，要读取sql，就调用**MappedStatement**的**getBoundSql(parameterObject)**方法，这样就会间接的调用**sqlSource**的**getBoundSql(parameterObject)**方法(就是上面的方法)，把动态sql解析成静态sql(**StaticSqlSource**)select * from t where t.id =? ,并且同时通过传入的parameterObject知道了sql的参数。
+4.在调用成静态sql的getBoundSql(parameterObject)，获取一个最终结果的BoundSql。这个BoundSql包含完整的sql：select * from t where t.id = ？，参数信息（id，int类型，intHandler），参数详情
+Object={id = 1}；
+有了这些，就可以带入到sataement设置值了，向数据库发送sql
 
 从而获取动态的sql语句以及参数的映射信息以及参数，为最终的查询做准备。
 
